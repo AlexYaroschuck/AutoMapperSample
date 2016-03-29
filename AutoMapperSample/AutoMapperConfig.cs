@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapperTests.AutoMapperResolvers;
 using AutoMapperTests.Models;
 
 namespace AutoMapperTests
@@ -9,7 +10,7 @@ namespace AutoMapperTests
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<Merchand, Custumer>()
+                config.CreateMap<Merchand, Customer>()
                     .ForMember(dest => dest.MechandLName,
                         opt => opt.MapFrom(src => src.LastName))
                     .ForMember(dest => dest.MerchandFName,
@@ -21,15 +22,15 @@ namespace AutoMapperTests
                     .ForMember(dest => dest.LastName,
                         opt => opt.Ignore());
 
-                config.CreateMap<BillingInfo, Custumer>()
+                config.CreateMap<BillingInfo, Customer>()
                     .ForMember(dest => dest.Address,
-                        opt => opt.MapFrom(src => src.Country + " " + src.City + " " + src.Street))
+                        opt => opt.ResolveUsing<AddressResolver>())
                     .ForMember(dest => dest.CCLastFour,
                         opt => opt.MapFrom(src => src.LastFour))
                     .ForMember(dest => dest.CCNumber,
                         opt => opt.MapFrom(src => src.CreditCardNumber));
 
-                config.CreateMap<UserForm, Custumer>()
+                config.CreateMap<UserForm, Customer>()
                     .ForMember(dest => dest.FirstName,
                         opt => opt.MapFrom(src => src.Name.Split(' ')[0]))
                     .ForMember(dest => dest.LastName,
@@ -38,7 +39,11 @@ namespace AutoMapperTests
                         opt => opt.MapFrom(src => src.Email))
                     .ForMember(dest => dest.Age,
                         opt => opt.MapFrom(src => src.Age));
-                    
+
+                config.CreateMap<UserForm, Customer>().ReverseMap()
+                    .ForMember(dest => dest.Name,
+                        opt => opt.ResolveUsing<UserFormNameResolver>());
+
             });
         }
     }

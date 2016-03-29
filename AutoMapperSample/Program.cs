@@ -39,9 +39,11 @@ namespace AutoMapperTests
 
             try
             {
-                var custumer = Mapper.Map<Merchand, Custumer>(merchand1);
+                var custumer = Mapper.Map<Merchand, Customer>(merchand1);
                 Mapper.Map(billingInfo, custumer);
                 Mapper.Map(userFrom, custumer);
+
+                var userForm = Mapper.Map<Customer, UserForm>(custumer);
                 Console.WriteLine(custumer.ToString());
             }
             catch (Exception ex)

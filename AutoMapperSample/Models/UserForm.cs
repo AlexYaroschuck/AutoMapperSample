@@ -1,7 +1,7 @@
 ﻿
 namespace AutoMapperTests.Models
 {
-    class UserForm
+    public class UserForm
     {
         public string Name { get; set; }//FName + LName
         public int Age { get; set; }

@@ -1,7 +1,7 @@
 ﻿
 namespace AutoMapperTests.Models
 {
-    class Merchand
+    public class Merchand
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
